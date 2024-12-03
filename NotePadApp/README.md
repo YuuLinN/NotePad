@@ -1,60 +1,59 @@
-#  Android期中实验
+#安卓期中实验
 
-## NotePad记事本应用
+##记事本记事本应用
 
-本次项目实现了NotePad的一些基本功能,如保存笔记，记录保存时间戳，显示笔记字数，更换背景图，弹窗提醒保存·修改·删除等是否 
-成功等功能。界面简洁明亮，操作简单。
+本次项目实现了记事本的一些基本功能，如保存笔记，记录保存时间戳，显示笔记字数，按笔记标题搜索，更换背景图，弹窗提醒保存·修改·删除等是否成功等功能。界面简洁明亮，操作简单。
 
-下面将对这些个功能进行效果展示和关键代码的展示。
-
-## 一、必需功能
+下面将对这些功能进行效果展示和关键代码的展示。
 
 
-### 1.主页面笔记显示标题和内容，显示时间戳功能
+###1.主页面笔记显示标题和部分正文，下方显示时间戳功能
 
 效果展示:
 ![img.png](img.png)
 
 代码节选:
-
+//显示标题
+     
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/con"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    Android:id="@+id/con"
+    Android：方向=“垂直”
+    Android:layout_width="match_parent"
+    Android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:maxLines="1"
-        android:layout_marginStart="10dp" />
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:maxLines="2"
-        android:layout_marginStart="10dp" />
-    <TextView
-        android:id="@+id/create_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"/>
+    <文本视图
+    Android:id="@+id/title"
+    Android:layout_width="wrap_content"
+    Android:layout_height="wrap_content"
+    Android:textColor="@color/black"
+    Android:textSize="22sp"
+    Android:maxlines="1"
+    Android:layout_marginStart="10dp"/>
+    <文本视图
+    Android:id="@+id/content"
+    Android:layout_width="wrap_content"
+    Android:layout_height="wrap_content"
+    Android:textColor="@color/black"
+    Android:textSize="20sp"
+    Android:maxlines="2"
+    Android:layout_marginStart="10dp"/>
+    <文本视图
+    Android:id="@+id/create_time"
+    Android:layout_width="wrap_content"
+    Android:layout_height="wrap_content"
+    Android:layout_marginStart="10dp"/>
 
     <ImageView
-        android:id="@+id/del"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/del"
-        android:layout_gravity="end" />
+    Android:id="@+id/del"
+    Android:layout_width="30dp"
+    Android:layout_height="30dp"
+    Android:src="@drawable/del"
+    Android:layout_gravity="end"/>
     </LinearLayout>
 
 
+    //显示时间
 
     else {
         Date date = new Date(System.currentTimeMillis());
@@ -73,7 +72,7 @@
 
 
 
-### 2.新增笔记显示当前时间和显示正文字数功能,修改笔记显示上次修改时间和显示正文字数功能
+### 2.新增笔记时显示当前时间和显示正文字数功能,修改笔记时显示上次修改时间和显示正文字数功能
 
 
 效果展示：
@@ -109,6 +108,7 @@
             titleBar.setTitle("新增记事本");
         }
 
+
         //更新字数
         content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -142,15 +142,7 @@
 
 代码节选:
 
-    titleBar.setOnRightViewClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Date date = new Date(System.currentTimeMillis());
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss", Locale.CHINA);
-                if (!"".equals(title.getText().toString())&&!"".equals(content.getText().toString())){
-                    if (flag==null){
-                        if (notePadProvider.insertNotes(title.getText().toString(),content.getText().toString(),simpleDateFormat.format(date), SPUtils.getInstance().getString("username"))){
-                            Toast.makeText(NoteEditor0.this, "保存成功！", Toast.LENGTH_SHORT).show();
+         //弹窗提醒                   Toast.makeText(NoteEditor0.this, "保存成功！", Toast.LENGTH_SHORT).show();
                         }
                         else {
                             Toast.makeText(NoteEditor0.this, "未知错误", Toast.LENGTH_SHORT).show();
@@ -176,7 +168,7 @@
 
 
 
-### 4.依照标题搜索功能（不能依照内容）
+### 4.依照标题搜索功能
 
 效果展示：
 ![img_1.png](img_1.png)
@@ -227,6 +219,7 @@
 
 代码节选:
 
+     //一键删除
     <ImageView
         android:id="@+id/del"
         android:layout_width="30dp"
@@ -262,69 +255,7 @@
 
 
 
-### 6.系统图标美化
-
-效果展示：
-
-![img_9.png](img_9.png)
-
-![img_10.png](img_10.png)
-
-![img_11.png](img_11.png)
-
-代码节选:
-
-    <?xml version="1.0" encoding="utf-8"?>
-    <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
-        <shape>
-            <gradient android:startColor="#96AFB0"
-                android:endColor="#377780"
-                android:angle="90" />
-            <corners android:radius="15dip" />
-            <padding android:left="10dp" android:top="10dp"
-                android:right="10dp" android:bottom="10dp" />
-        </shape>
-    </item>
-
-    <item android:state_focused="true">
-        <shape>
-            <gradient android:startColor="#377780"
-                android:endColor="#377780"
-                android:angle="90" />
-            <corners android:radius="2dp" />
-            <padding android:left="10dp" android:top="10dp"
-                android:right="10dp" android:bottom="10dp" />
-        </shape>
-    </item>
-
-    <!--不带状态的放在最后-->
-    <item>
-        <shape>
-            <gradient android:startColor="#50A2AD" android:endColor="#AFC8CC"
-                android:angle="180" />
-            <corners android:radius="15dip" />
-            <padding android:left="10dp" android:top="10dp"
-                android:right="10dp" android:bottom="10dp" />
-        </shape>
-    </item>
-    </selector>
-
-
-
-    <?xml version="1.0" encoding="utf-8"?>
-    <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <stroke
-    android:width="1dp"
-    android:color="#50A2AD" />
-    <solid  android:color="#ffffff" />
-    <corners android:radius="10dp"/>
-    </shape>    
-
-
-   
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+//笔记界面<androidx.ConstraintLayout.widget。ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -391,7 +322,72 @@
         android:autofillHints="" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-编辑者：YuuLinN
+
+
+### 6.系统图标美化
+
+效果展示：
+
+![img_9.png](img_9.png)
+
+![img_10.png](img_10.png)
+
+![img_11.png](img_11.png)
+
+代码节选:
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <gradient android:startColor="#96AFB0"
+                android:endColor="#377780"
+                android:angle="90" />
+            <corners android:radius="15dip" />
+            <padding android:left="10dp" android:top="10dp"
+                android:right="10dp" android:bottom="10dp" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true">
+        <shape>
+            <gradient android:startColor="#377780"
+                android:endColor="#377780"
+                android:angle="90" />
+            <corners android:radius="2dp" />
+            <padding android:left="10dp" android:top="10dp"
+                android:right="10dp" android:bottom="10dp" />
+        </shape>
+    </item>
+
+    <!--不带状态的放在最后-->
+    <item>
+        <shape>
+            <gradient android:startColor="#50A2AD" android:endColor="#AFC8CC"
+                android:angle="180" />
+            <corners android:radius="15dip" />
+            <padding android:left="10dp" android:top="10dp"
+                android:right="10dp" android:bottom="10dp" />
+        </shape>
+    </item>
+    </selector>
+
+
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <stroke
+    android:width="1dp"
+    android:color="#50A2AD" />
+    <solid  android:color="#ffffff" />
+    <corners android:radius="10dp"/>
+    </shape>    
+
+
+
+   
+编辑者：YuuLinN（喻）
 
 
 
