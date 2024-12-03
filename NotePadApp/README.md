@@ -255,13 +255,13 @@
 
 
 
-//笔记界面<androidx.ConstraintLayout.widget。ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+     //笔记界面<androidx.ConstraintLayout.widget。ConstraintLayout      xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.android.notepad.NoteEditor0"
-    android:background="@drawable/note_background04">
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+             tools:context="com.example.android.notepad.NoteEditor0"
+         android:background="@drawable/note_background04">
 
     <TextView
         android:id="@+id/time"
