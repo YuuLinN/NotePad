@@ -61,8 +61,8 @@
         titleBar.setTitle("新增记事本");//设置标题
     }
 
-    定义了一个 LinearLayout 布局，设置用于显示标题时间戳等的文本框和右下角的图片图标。
-    笔记列表中每条笔记显示其最后修改时的标题时间戳等。在数据库中为笔记添加标题时间戳等字段，修改笔记会动态更新。
+ 定义了一个 LinearLayout 布局，设置用于显示标题时间戳等的文本框和右下角的图片图标。
+ 笔记列表中每条笔记显示其最后修改时的标题时间戳等。在数据库中为笔记添加标题时间戳等字段，修改笔记会动态更新。
 
 
 
@@ -102,7 +102,7 @@
         });
 
 
-      当用户提交搜索文本时（例如按下回车键），会执行 onQueryTextSubmit 方法。如果查询文本不为空，它会清空当前的 noteList，然后使用 notePadProvider 的 getNotes 方法获取与查询文本匹配的笔记列表，并更新 noteList。接着调用 noteAdapter 的 notifyDataSetChanged 方法来通知列表数据集已改变，需要刷新视图。最后，清除 SearchView 的焦点。
+  当用户提交搜索文本时（例如按下回车键），会执行 onQueryTextSubmit 方法。如果查询文本不为空，它会清空当前的 noteList，然后使用 notePadProvider 的 getNotes 方法获取与查询文本匹配的笔记列表，并更新 noteList。接着调用 noteAdapter 的 notifyDataSetChanged 方法来通知列表数据集已改变，需要刷新视图。最后，清除 SearchView 的焦点。
 
 
 
@@ -201,8 +201,8 @@
         });
                   
   
-  
-  在点击保存按钮后触发执行该代码
+   
+    在点击保存按钮后触发执行该代码
             
 
 
