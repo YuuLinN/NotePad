@@ -11,7 +11,8 @@
 ![img.png](img.png)
 
 代码节选:
-//显示标题
+    
+    //显示标题
      
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -175,7 +176,7 @@
 
 代码节选:
                             
-                            在点击保存按钮后触发执行
+                           
                             //弹窗提醒    
                             Toast.makeText(NoteEditor0.this, "保存成功！", Toast.LENGTH_SHORT).show();
                         }
@@ -199,7 +200,9 @@
             }
         });
                   
-            在点击保存按钮后触发执行
+  
+  
+  在点击保存按钮后触发执行该代码
             
 
 
