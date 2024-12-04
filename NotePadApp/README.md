@@ -55,118 +55,18 @@
 
     else {
         Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss", Locale.CHINA);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss", Locale.CHINA);//格式化日期和时间
         time.setText(simpleDateFormat.format(date));
-        titleBar.setTitle("新增记事本");
+        titleBar.setTitle("新增记事本");//设置标题
     }
 
-    笔记列表中每条笔记显示其最后修改的时间戳。
-    时间戳随笔记的修改动态更新。
-
-    关键实现步骤：
-    在数据库中为笔记添加时间戳字段。
-    在笔记列表项布局中添加显示时间戳的文本框。
-    在适配器中绑定时间戳数据，并格式化显示。
-
-
-
-### 2.新增笔记时显示当前时间和显示正文字数功能,修改笔记时显示上次修改时间和显示正文字数功能
-
-
-效果展示：
-![img_19.png](img_19.png)
-
-![img_2.png](img_2.png)
-
-代码节选:
-
-    protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_add_note);
-    title=findViewById(R.id.title);
-    content=findViewById(R.id.content);
-    number=findViewById(R.id.number);
-    time=findViewById(R.id.time);
-    flag = getIntent().getStringExtra("flag");
-    titleBar.getRightTextView().setText("保存");
-
-        if (flag!=null){
-            note = (Notes) getIntent().getSerializableExtra("entity");
-            title.setText(note.getTitle());
-            content.setText(note.getContent());
-            time.setText("上次修改时间:"+ note.getTime());
-            number.setText(note.getContent().length()+"字");
-            titleBar.setTitle("修改记事本");
-        }
-        //设置时间
-        else {
-            Date date = new Date(System.currentTimeMillis());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss", Locale.CHINA);
-            time.setText(simpleDateFormat.format(date));
-            titleBar.setTitle("新增记事本");
-        }
-
-
-        //更新字数
-        content.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                number.setText(content.getText().toString().length()+"字");
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-    }
+    定义了一个 LinearLayout 布局，设置用于显示标题时间戳等的文本框和右下角的图片图标。
+    笔记列表中每条笔记显示其最后修改时的标题时间戳等。在数据库中为笔记添加标题时间戳等字段，修改笔记会动态更新。
 
 
 
 
-### 3.保存·修改·删除时于屏幕下方弹窗提醒功能
-
-效果展示：
-![img_20.png](img_20.png)
-
-![img_22.png](img_22.png)
-
-![img_21.png](img_21.png)
-
-![img_24.png](img_24.png)
-
-代码节选:
-
-         //弹窗提醒                   Toast.makeText(NoteEditor0.this, "保存成功！", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(NoteEditor0.this, "未知错误", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else {
-                        if (notePadProvider.updateNotes(String.valueOf(note.getId()),title.getText().toString(),content.getText().toString(),simpleDateFormat.format(date))){
-                            Toast.makeText(NoteEditor0.this, "修改成功！", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(NoteEditor0.this, "未知错误", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    finish();
-                }
-                else {
-                    Toast.makeText(NoteEditor0.this, "请输入内容！", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-
-
-
-### 4.依照标题搜索功能
+### 2.依照标题搜索功能
 
 效果展示：
 ![img_1.png](img_1.png)
@@ -200,6 +100,107 @@
             }
         });
 
+
+      当用户提交搜索文本时（例如按下回车键），会执行 onQueryTextSubmit 方法。如果查询文本不为空，它会清空当前的 noteList，然后使用 notePadProvider 的 getNotes 方法获取与查询文本匹配的笔记列表，并更新 noteList。接着调用 noteAdapter 的 notifyDataSetChanged 方法来通知列表数据集已改变，需要刷新视图。最后，清除 SearchView 的焦点。
+
+
+
+### 3.新增笔记时显示当前时间和显示正文字数功能,修改笔记时显示上次修改时间和显示正文字数功能
+
+
+效果展示：
+![img_19.png](img_19.png)
+
+![img_2.png](img_2.png)
+
+代码节选:
+
+    protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_add_note);//设置当前视图
+    title=findViewById(R.id.title);
+    content=findViewById(R.id.content);
+    number=findViewById(R.id.number);
+    time=findViewById(R.id.time);
+    flag = getIntent().getStringExtra("flag");
+    titleBar.getRightTextView().setText("保存");
+
+        if (flag!=null){
+            note = (Notes) getIntent().getSerializableExtra("entity");
+            title.setText(note.getTitle());
+            content.setText(note.getContent());
+            time.setText("上次修改时间:"+ note.getTime());
+            number.setText(note.getContent().length()+"字");
+            titleBar.setTitle("修改记事本");
+        }
+        //设置时间格式
+        else {
+            Date date = new Date(System.currentTimeMillis());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss", Locale.CHINA);
+            time.setText(simpleDateFormat.format(date));
+            titleBar.setTitle("新增记事本");
+        }
+
+
+        //更新正文内容字数
+        content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }//监听文本变化
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                number.setText(content.getText().toString().length()+"字");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+    }
+
+
+
+
+### 4.保存·修改·删除时于屏幕下方弹窗提醒功能
+
+效果展示：
+![img_20.png](img_20.png)
+
+![img_22.png](img_22.png)
+
+![img_21.png](img_21.png)
+
+![img_24.png](img_24.png)
+
+代码节选:
+                            
+                            在点击保存按钮后触发执行
+                            //弹窗提醒    
+                            Toast.makeText(NoteEditor0.this, "保存成功！", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(NoteEditor0.this, "未知错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        if (notePadProvider.updateNotes(String.valueOf(note.getId()),title.getText().toString(),content.getText().toString(),simpleDateFormat.format(date))){
+                            Toast.makeText(NoteEditor0.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                        }//更新成功
+                        else {
+                            Toast.makeText(NoteEditor0.this, "未知错误", Toast.LENGTH_SHORT).show();
+                        }//更新失败
+                    }
+                    finish();
+                }
+                else {
+                    Toast.makeText(NoteEditor0.this, "请输入内容！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+                  
+            在点击保存按钮后触发执行
+            
 
 
 ### 5.UI美化 背景图 
@@ -253,13 +254,14 @@
 
 
 
-     //笔记界面<androidx.ConstraintLayout.widget。ConstraintLayout      xmlns:android="http://schemas.android.com/apk/res/android"
+         //笔记界面
+         <androidx.ConstraintLayout.widget。ConstraintLayout      xmlns:android="http://schemas.android.com/apk/res/android"
          xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
              tools:context="com.example.android.notepad.NoteEditor0"
-         android:background="@drawable/note_background04">
+         android:background="@drawable/note_background04">//添加背景图
 
     <TextView
         android:id="@+id/time"
